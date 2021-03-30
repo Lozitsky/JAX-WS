@@ -1,4 +1,4 @@
-package com.kirilo.hello_client;
+package com.kirilo.hello;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.AfterClass;
@@ -40,7 +40,7 @@ public class HelloAppClient {
 
     @Test
     public void wsdlExists() throws IOException {
-        final URL url = new URL("http://localhost:8080/service/HelloService?wsdl");
+        final URL url = new URL("http://localhost:8080/service/webservices/Hello?wsdl");
         assertTrue(IOUtils.readLines(url.openStream()).size() > 0);
         assertTrue(IOUtils.readLines(url.openStream()).toString().contains("HelloService"));
     }
