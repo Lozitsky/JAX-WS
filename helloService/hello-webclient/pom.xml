@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>helloService</artifactId>
+        <groupId>com.kirilo</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>hello-webclient</artifactId>
+    <packaging>war</packaging>
+
+    <properties>
+    </properties>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>${jaxws-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wsdlUrls>
+                        <wsdlUrl>http://localhost:8080/hello-service/HelloService?wsdl</wsdlUrl>
+                    </wsdlUrls>
+                    <keep>true</keep>
+                    <packageName>com.kirilo.helloservice</packageName>
+                    <sourceDestDir>target/generated-sources</sourceDestDir>
+                    <!--                    <sourceDestDir>${project.basedir}/src</sourceDestDir>-->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomee.maven</groupId>
+                <artifactId>tomee-maven-plugin</artifactId>
+                <version>8.0.6</version>
+                <configuration>
+                    <inlinedServerXml>
+                        <!--                        <Server port="8005" shutdown="SHUTDOWN">-->
+                        <!--                         https://rmannibucau.wordpress.com/2015/04/07/tomee-maven-plugin-finally-server-xml-in-your-pom/ -->
+                        <Server port="8006" shutdown="SHUTDOWN">
+                            <Listener className="org.apache.tomee.catalina.ServerListener"/>
+                            <Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
+                            <Service name="Catalina">
+                                <Connector port="8088" protocol="HTTP/1.1"/>
+                                <Engine name="Catalina" defaultHost="localhost">
+                                    <Host name="localhost" appBase="webapps"
+                                          unpackWARs="true" autoDeploy="true">
+                                    </Host>
+                                </Engine>
+                            </Service>
+                        </Server>
+                    </inlinedServerXml>
+                    <tomeeClassifier>${tomee.flavour}</tomeeClassifier>
+                    <args>-Xmx512m -XX:PermSize=256m</args>
+                    <!--                    <removeDefaultWebapps>false</removeDefaultWebapps>-->
+                    <!--                    <config>tomee/conf</config>-->
+                    <libs>
+                        <!--                        <lib>mysql:mysql-connector-java:${mysql.version}</lib>-->
+                    </libs>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>${jaxws-rt.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
