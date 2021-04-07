@@ -15,6 +15,6 @@ public interface ImageServer {
     Image downloadImage(String name) throws URISyntaxException;
 
     @WebMethod
-    String uploadImage(Image data);
+    String uploadImage(byte[] data);
 }
 

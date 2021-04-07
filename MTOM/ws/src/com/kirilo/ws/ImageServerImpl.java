@@ -45,10 +45,10 @@ public class ImageServerImpl implements ImageServer {
     }
 
     @Override
-    public String uploadImage(Image data) {
+    public String uploadImage(byte[] data) {
         if (data != null) {
             //store somewhere
-            return "Upload Successful";
+            return "Upload Successful: " + data.length / 1024 + " kb";
         }
         throw new WebServiceException("Upload Failed!");
     }

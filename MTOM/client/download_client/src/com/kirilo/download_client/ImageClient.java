@@ -1,4 +1,4 @@
-package com.kirilo.client;
+package com.kirilo.download_client;
 
 import com.kirilo.ws.ImageServer;
 import com.kirilo.ws.URISyntaxException_Exception;

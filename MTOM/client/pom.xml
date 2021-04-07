@@ -9,51 +9,113 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>client</artifactId>
-    <packaging>app-client</packaging>
+    <packaging>pom</packaging>
+    <modules>
+        <module>upload_client</module>
+        <module>download_client</module>
+    </modules>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <!--    <properties>-->
+    <!--        <maven.compiler.source>8</maven.compiler.source>-->
+    <!--        <maven.compiler.target>8</maven.compiler.target>-->
+    <!--    </properties>-->
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-acr-plugin</artifactId>
-                <version>1.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.kirilo.client.ImageClient</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <wsdlUrls>
-                        <wsdlUrl>http://localhost:8080/image-service/ImageService?wsdl</wsdlUrl>
-                    </wsdlUrls>
-                    <keep>true</keep>
-                    <packageName>com.kirilo.ws</packageName>
-                    <sourceDestDir>target/generated-sources</sourceDestDir>
-                </configuration>
-            </plugin>
-        </plugins>
+        <!--        <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <configuration>
+                                <archive>
+                                    <manifest>
+                                        <addClasspath>true</addClasspath>
+                                        <mainClass>com.kirilo.download_client.ImageClient</mainClass>
+                                    </manifest>
+                                </archive>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>-->
+<!--        <pluginManagement>-->
+            <plugins>
+<!--                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-acr-plugin</artifactId>
+                    <version>1.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>${project.groupId}.${project.artifactId}.ImageClient</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>-->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>com.kirilo.${project.artifactId}.ImageClient</mainClass>
+<!--                                <mainClass>${project.groupId}.ws.ImageClient</mainClass>-->
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxws-maven-plugin</artifactId>
+                    <version>2.6</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>wsimport</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <wsdlUrls>
+                            <wsdlUrl>http://localhost:8080/image-service/ImageService?wsdl</wsdlUrl>
+                        </wsdlUrls>
+                        <keep>true</keep>
+                        <packageName>com.kirilo.ws</packageName>
+                        <sourceDestDir>target/generated-sources</sourceDestDir>
+                    </configuration>
+                </plugin>
+            </plugins>
+
+<!--        </pluginManagement>-->
     </build>
+
+        <dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                    <version>2.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.codehaus.plexus</groupId>
+                    <artifactId>plexus-utils</artifactId>
+                    <version>1.1</version>
+                </dependency>
+
+<!--                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>${jaxws-rt.version}</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>-->
+            </dependencies>
+        </dependencyManagement>
 
     <dependencies>
         <dependency>
