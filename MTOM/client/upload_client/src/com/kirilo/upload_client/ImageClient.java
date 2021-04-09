@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+// https://www.tutorialspoint.com/How-to-convert-Image-to-Byte-Array-in-java
 public class ImageClient {
     public static void main(String[] args) throws IOException {
         Service service = Service.create(new URL("http://localhost:8080/image-service/ImageService?wsdl"),

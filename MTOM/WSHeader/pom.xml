@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.kirilo</groupId>
+        <artifactId>MTOM</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>WSHeader</artifactId>
+<!--    <version>1.0-SNAPSHOT</version>-->
+    <packaging>war</packaging>
+
+    <!--    <properties>
+            <src.dir>src</src.dir>
+            <test.dir>test</test.dir>
+            <java.version>8</java.version>
+            &lt;!&ndash;        <maven.compiler.source>8</maven.compiler.source>&ndash;&gt;
+            &lt;!&ndash;        <maven.compiler.target>8</maven.compiler.target>&ndash;&gt;
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+            <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+            <tomee.version>8.0.6</tomee.version>
+            <tomee.flavour>plume</tomee.flavour>
+        </properties>-->
+
+    <!--    <build>
+            <finalName>service</finalName>
+            <sourceDirectory>src</sourceDirectory>
+            <testSourceDirectory>test</testSourceDirectory>
+            <pluginManagement>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            &lt;!&ndash;                        <release>${java.version}</release>&ndash;&gt;
+                            &lt;!&ndash;                        <compilerArgs>&#45;&#45;enable-preview</compilerArgs>&ndash;&gt;
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <configuration>
+                            <webResources>
+                                &lt;!&ndash; https://stackoverflow.com/a/36484906/9586230 &ndash;&gt;
+                                <resource>
+                                    <directory>${src.dir}/META-INF</directory>
+                                    <filtering>true</filtering>
+
+                                    <targetPath>WEB-INF/classes/META-INF</targetPath>
+                                    <includes>
+                                        &lt;!&ndash;                                    <include>**/persistence.xml</include>&ndash;&gt;
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${src.dir}/resources</directory>
+                                    <filtering>true</filtering>
+
+                                    <targetPath>WEB-INF/classes/META-INF</targetPath>
+                                    <includes>
+                                    </includes>
+                                </resource>
+                            </webResources>
+                            <warSourceDirectory>web</warSourceDirectory>
+                            <archiveClasses>false</archiveClasses>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </pluginManagement>
+        </build>-->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomee.maven</groupId>
+                <artifactId>tomee-maven-plugin</artifactId>
+                <version>${tomee.version}</version>
+                <configuration>
+                    <tomeeClassifier>${tomee.flavour}</tomeeClassifier>
+                    <args>-Xmx512m -XX:PermSize=256m</args>
+                    <!--                    <removeDefaultWebapps>false</removeDefaultWebapps>-->
+                    <!--                    <config>tomee/conf</config>-->
+                    <libs>
+                        <!--                        <lib>mysql:mysql-connector-java:${mysql.version}</lib>-->
+                    </libs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--    <dependencies>
+            <dependency>
+                <groupId>org.apache.tomee</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>[8.0,)</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomee</groupId>
+                <artifactId>openejb-cxf</artifactId>
+                <version>8.0.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.openejb</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>7.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>-->
+
+    <dependencies>
+
+<!--        <dependency>
+            <groupId>org.apache.tomee</groupId>
+            <artifactId>openejb-cxf</artifactId>
+            <version>${tomee.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>${jaxws-rt.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+<!-- https://stackoverflow.com/a/24628531/9586230 -->
+        <dependency>
+            <groupId>javax.ejb</groupId>
+            <artifactId>javax.ejb-api</artifactId>
+            <version>3.2.2</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
